@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- Document type -->
+
+        <record model='l10n_latam.document.type' id='document_type02'>
+            <field name='sequence'>02</field>
+            <field name='code'>02</field>
+            <field name="type_of">2</field>
+            <field name='name'>Recibo por honorarios</field>
+            <field name='report_name'>Recibo por honorarios</field>
+            <field name='country_id' ref='base.pe' />
+            <field name='internal_type'>invoice</field>
+        </record>
+
+        <!-- Taxes -->
+
+        <record id="rxh_tax_retention_0" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_pe.pe_chart_template" />
+            <field name="name">Retención (0%) RxH</field>
+            <field name="description">Retención (0%) RxH</field>
+            <field name="l10n_pe_edi_tax_code">9997</field>
+            <field name="l10n_pe_edi_unece_category">E</field>
+            <field name="amount">0.0</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="sequence">1</field>
+            <field name="include_base_amount">1</field>
+            <field name="tax_group_id" ref="l10n_pe.tax_group_igv" />
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_pe.chart40114'),
+            }),
+
+        ]" />
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_pe.chart40114'),
+            }),
+        ]" />
+        </record>
+
+        <record id="rxh_tax_retention_8" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_pe.pe_chart_template" />
+            <field name="name">Retención (8%) RxH</field>
+            <field name="description">Retención (8%) RxH</field>
+            <field name="l10n_pe_edi_tax_code">1000</field>
+            <field name="l10n_pe_edi_unece_category">S</field>
+            <field name="amount">8.0</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="sequence">1</field>
+            <field name="include_base_amount">1</field>
+            <field name="tax_group_id" ref="l10n_pe.tax_group_igv" />
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_pe.chart40114'),
+            }),
+
+        ]" />
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_pe.chart40114'),
+            }),
+        ]" />
+        </record>
+    </data>
+
+</odoo>

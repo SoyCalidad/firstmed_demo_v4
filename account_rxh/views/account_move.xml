@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_pe_edi_account_move_inherit" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="payment_reference" position="after">
+                <field name="l10n_latam_document_type_id" attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'in_refund'))],'required': [('move_type', 'in', ('out_invoice', 'out_refund')),('l10n_pe_edi_is_einvoice','=',True)], 'readonly': [('state', '!=', 'draft')]}" domain="[('internal_type','in',('invoice','credit_note','debit_note'))]" force_save="True"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
