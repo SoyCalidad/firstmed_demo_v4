@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Creacion del wizard para apuntes contables-->
+        <record id="account_move_line_wizard" model="ir.ui.view">
+            <field name="name">account.move.line.wizard.view</field>
+            <field name="model">account.move.line.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Apunte Contable">
+                    <sheet>
+                        <field name="company_id" invisible="1"/>
+                        <field name="parent_state" invisible="1"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id" domain="['|', ('parent_id', '=', False), ('is_company', '=', True)]" attrs="{'readonly': [('parent_state', '=', 'posted')]}"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Información">
+                                <group>
+                                    <group string="Monto">
+                                        <field name="account_id" attrs="{'readonly':[('parent_state','=','posted')]}"/>
+                                        <field name="debit" attrs="{'readonly':[('parent_state','=','posted')]}"/>
+                                        <field name="credit" attrs="{'readonly':[('parent_state','=','posted')]}"/>
+                                        <field name="quantity"/>
+                                        <field name="lifetime"/>
+                                    </group>
+                                    <group string="Documentos Contables">
+                                        <field name="move_id" attrs="{'readonly':[('parent_state','=','posted')]}"/>
+                                        <field name="statement_id" readonly="True" attrs="{'invisible': [('statement_id','=',False)]}"/>
+                                        <field name="invoice_id" attrs="{'invisible': [('invoice_id','=',False)]}"/>
+                                    </group>
+                                    <group string="Fechas">
+                                        <field name="date"/>
+                                        <field name="date_maturity"/>
+                                    </group>
+
+                                    <group string="Impuestos" attrs="{'invisible': [('tax_line_id','=',False), ('tax_ids','=',[])]}">
+                                        <field name="tax_line_id" readonly="1" attrs="{'invisible': [('tax_line_id','=',False)]}"/>
+                                        <field name="tax_ids" widget="many2many_tags" readonly="1" attrs="{'invisible': [('tax_ids','=',[])]}"/>
+                                    </group>
+                                    <group string="Matching" attrs="{'invisible':[('full_reconcile_id','=',False), ('matched_debit_ids', '=', []),('matched_credit_ids', '=', [])]}">
+                                        <label for="full_reconcile_id"/>
+                                        <div>
+                                            <field name="full_reconcile_id"/>
+                                            <field name="matched_debit_ids" invisible="1"/>
+                                            <field name="matched_credit_ids" invisible="1"/>
+                                            <button name="open_reconcile_view" class="oe_link" type="object" string="-> View partially reconciled entries" attrs="{'invisible': ['|', ('full_reconcile_id', '!=', False), '&amp;', ('matched_debit_ids', '=', []),('matched_credit_ids', '=', [])]}">
+                                            </button>
+                                        </div>
+                                    </group>
+                                    <group string="Moneda" groups="base.group_multi_currency">
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="amount_currency"/>
+                                    </group>
+                                    <group string="Estados">
+                                        <field name="blocked"/>
+                                    </group>
+                                    <group groups="analytic.group_analytic_accounting" string="Analytic">
+                                        <field name="analytic_account_id"/>
+                                        <field name="analytic_tag_ids" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                                <field name="narration" colspan="4" nolabel="1" placeholder="Add an internal note..."/>
+                            </page>
+                            <page string="Lineas Analíticas" groups="analytic.group_analytic_accounting">
+                                <field name="date" invisible="1"/>
+                                <field name="analytic_line_ids" context="{'default_general_account_id':account_id, 'default_name': name, 'default_date':date, 'amount': (debit or 0.0)-(credit or 0.0)}"/>
+                            </page>
+                            <page string="Información Adicional">
+                                <group string="Información Adicional">
+                                    <field name="reference1" attrs="{'invisible': [('has_reference1', '=', False)]}"/>
+                                    <field name="has_reference1" invisible="1"/>
+                                    <field name="reference2" attrs="{'invisible': [('has_reference2', '=', False)]}"/>
+                                    <field name="has_reference2" invisible="1"/>
+                                    <field name="area" attrs="{'invisible': [('has_area', '=', False)]}"/>
+                                    <field name="has_area" invisible="1"/>
+                                    <field name="adjust_account" attrs="{'invisible': [('has_adjust_account', '=', False)]}"/>
+                                    <field name="has_adjust_account" invisible="1"/>
+                                    <field name="payment_document_type" attrs="{'invisible': [('has_payment_document_type', '=', False)]}" widget="selection"/>
+                                    <field name="has_payment_document_type" invisible="1"/>
+                                    <field name="capital_change_type" attrs="{'invisible': [('capital_change_type_relate', '=', False)]}"/>
+                                    <field name="capital_change_type_relate" invisible="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <footer>
+                            <button name="create_move_line" string="Crear Linea" type="object" class="btn-primary"/>
+                            <button string="Cancelar" class="btn-default" special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_view_wizard_account_move_line" model="ir.actions.act_window">
+            <field name="name">Asistente de Cuenta Contable</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line.wizard</field>
+            
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_move_line_wizard"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

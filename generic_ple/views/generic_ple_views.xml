@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="generic_ple_view" model="ir.ui.view">
+        <field name="name">PLE Genérico</field>
+        <field name="model">generic.ple</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="fiscal_year"/>
+                    <field name="period"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="journal_ple_view" model="ir.ui.view">
+        <field name="name">Libro Diario PLE</field>
+        <field name="model">journal.ple</field>
+        <field name="inherit_id" ref="generic_ple_view"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group' position='after'>
+                <footer>
+                    <button name="generate_ple_journal" type="object" string="Generar PLE" class="oe_highlight" icon="fa-download"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="accounting_plan_ple_view" model="ir.ui.view">
+        <field name="name">Plan Contable Utilizado PLE</field>
+        <field name="model">accounting.plan.ple</field>
+        <field name="inherit_id" ref="generic_ple_view"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group' position='after'>
+                <footer>
+                    <button name="generate_ple_accounting_plan" type="object" string="Generar PLE" class="oe_highlight" icon="fa-download"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="general_ple_view" model="ir.ui.view">
+        <field name="name">Libro Mayor PLE</field>
+        <field name="model">general.ple</field>
+        <field name="inherit_id" ref="generic_ple_view"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group' position='after'>
+                <footer>
+                    <button name="generate_ple_general" type="object" string="Generar PLE" class="oe_highlight" icon="fa-download"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_ple_view" model="ir.ui.view">
+        <field name="name">Registro de Compras PLE</field>
+        <field name="model">purchase.ple</field>
+        <field name="inherit_id" ref="generic_ple_view"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group' position='after'>
+                <footer>
+                    <button name="generate_ple_purchase" type="object" string="Generar PLE" class="oe_highlight" icon="fa-download"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_journal_ple" model="ir.actions.act_window">
+        <field name="name">Libro Diario</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">journal.ple</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="journal_ple_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_account" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_accounting_plan_ple" model="ir.actions.act_window">
+        <field name="name">Plan Contable Utilizado</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">accounting.plan.ple</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="accounting_plan_ple_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_account" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_general_ple" model="ir.actions.act_window">
+        <field name="name">Libro Mayor</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">general.ple</field>     
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="general_ple_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_account" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_purchase_ple" model="ir.actions.act_window">
+        <field name="name">Registro de Compras</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.ple</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="purchase_ple_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_account" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <menuitem id="menu_generic_ple" 
+        name="PLE" 
+        parent="account.menu_finance_reports" 
+        sequence="999" 
+        groups="account.group_account_manager,account.group_account_user" />
+
+    <menuitem id="menu_journal_ple" 
+        name="Libro Diario" 
+        parent="menu_generic_ple" 
+        action="action_journal_ple" 
+        sequence="6" 
+        groups="account.group_account_manager,account.group_account_user" />
+
+    <menuitem id="menu_accounting_plan_ple" 
+        name="Plan Contable Utilizado" 
+        parent="menu_generic_ple" 
+        action="action_accounting_plan_ple" 
+        sequence="6" 
+        groups="account.group_account_manager,account.group_account_user" />
+    
+    <menuitem id="menu_general_ple" 
+        name="Libro Mayor" 
+        parent="menu_generic_ple" 
+        action="action_general_ple" 
+        sequence="6" 
+        groups="account.group_account_manager,account.group_account_user" />
+
+    <menuitem id="menu_purchase_ple" 
+        name="Registro de Compras" 
+        parent="menu_generic_ple" 
+        action="action_purchase_ple" 
+        sequence="6" 
+        groups="account.group_account_manager,account.group_account_user" />
+
+</odoo>

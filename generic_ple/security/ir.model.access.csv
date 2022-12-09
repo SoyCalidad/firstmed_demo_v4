@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_generic_ple_all,Todos los permisos,model_generic_ple,account.group_account_manager,1,1,1,1
+
+access_purchase_ple_all,Todos los permisos,model_purchase_ple,account.group_account_manager,1,1,1,1
+
+access_journal_ple_all,Todos los permisos,model_journal_ple,account.group_account_manager,1,1,1,1
+
+access_general_ple_all,Todos los permisos,model_general_ple,account.group_account_manager,1,1,1,1
+
+access_accounting_plan_ple_all,Todos los permisos,model_accounting_plan_ple,account.group_account_manager,1,1,1,1
+

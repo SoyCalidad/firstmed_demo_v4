@@ -1,0 +1,167 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_account_form">
+            <field name="name">account.account.form</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form" />
+            <field name="arch" type="xml">
+                <field name="deprecated">
+                    <field name="category_id" />
+                </field>
+                <xpath expr="//sheet/group" position="inside">
+                    <notebook>
+                        <page string="Opciones">
+                            <group col="8">
+                                <field name="reference1" />
+                                <field name="reference2" />
+                                <field name="area" />
+                                <field name="adjust_account" />
+                                <field name="bank_concilation" />
+                                <field name="payment_document_type" />
+                            </group>
+                            <group>
+                                <field name="category_id" />
+                                <field name="account_related_credit_id" />
+                                <field name="account_related_debit_id" />
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- <record model="ir.ui.view" id="view_move_form">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//invoice_line_ids/tree/field[@name='price_total']" position="after">
+                    <button string="Información adicional" name="open_extra_data_form_view" type="object" />
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="view_move_line_form" model="ir.ui.view">
+            <field name="name">account.move.line.form</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook" position="inside">
+                    <page string="Información Adicional">
+                        <group string="Información Adicional">
+                            <field name="lifetime" />
+                            <field name="reference1" attrs="{'invisible': [('has_reference1', '=', False)]}" />
+                            <field name="has_reference1" invisible="1" />
+                            <field name="reference2" attrs="{'invisible': [('has_reference2', '=', False)]}" />
+                            <field name="has_reference2" invisible="1" />
+                            <field name="area" attrs="{'invisible': [('has_area', '=', False)]}" />
+                            <field name="has_area" invisible="1" />
+                            <field name="adjust_account" attrs="{'invisible': [('has_adjust_account', '=', False)]}" />
+                            <field name="has_adjust_account" invisible="1" />
+                            <field name="payment_document_type" attrs="{'invisible': [('has_payment_document_type', '=', False)]}" widget="selection" />
+                            <field name="has_payment_document_type" invisible="1" />
+                            <field name="capital_change_type" attrs="{'invisible': [('capital_change_type_relate', '=', False)]}" />
+                            <field name="capital_change_type_relate" invisible="1" />
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_move_line_extra_data_view_form" model="ir.ui.view">
+            <field name="name">account.move.line.view.form</field>
+            <field name="model">account.move.line</field>
+            <field name="priority">1000</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="lifetime" />
+                            <field name="reference1" attrs="{'invisible': [('has_reference1', '=', False)]}" />
+                            <field name="has_reference1" invisible="1" />
+                            <field name="reference2" attrs="{'invisible': [('has_reference2', '=', False)]}" />
+                            <field name="has_reference2" invisible="1" />
+                            <field name="area" attrs="{'invisible': [('has_area', '=', False)]}" />
+                            <field name="has_area" invisible="1" />
+                            <field name="adjust_account" attrs="{'invisible': [('has_adjust_account', '=', False)]}" />
+                            <field name="has_adjust_account" invisible="1" />
+                            <field name="payment_document_type" attrs="{'invisible': [('has_payment_document_type', '=', False)]}" widget="selection" />
+                            <field name="has_payment_document_type" invisible="1" />
+                            <field name="capital_change_type" attrs="{'invisible': [('capital_change_type_relate', '=', False)]}" />
+                            <field name="capital_change_type_relate" invisible="1" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="name">account.bank.statement.form.2</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form" />
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <field name="date" position="before">
+                    <field name="payment_method" />
+                </field>
+            </field>
+        </record>
+
+        <record id="account_invoice_supplier_inherit" model="ir.ui.view">
+            <field name="name">account.move.chart11</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <field name="invoice_date" position="after">
+                    <field name="dua_year" />
+                    <field name="customs_dependency" />
+                </field>
+            </field>
+        </record>
+
+
+        <record id="account_account_category_view_form" model="ir.ui.view">
+            <field name="name">account.account.category.form</field>
+            <field name="model">account.account.category</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="active" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="description" />
+                            <field name="account_ids" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="account_account_category_report_view_tree" model="ir.ui.view">
+            <field name="name">account.account.category.tree</field>
+            <field name="model">account.account.category</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="account_ids" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_account_category_report_action" model="ir.actions.act_window">
+            <field name="name">Clasificación en el Plan Contable</field>
+            <field name="res_model">account.account.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="account_account_category_menu" name="Categorías del Plan Contable" groups="account.group_account_manager" parent="account.account_account_menu" action="account_account_category_report_action" sequence="6" />
+
+    </data>
+</odoo>     

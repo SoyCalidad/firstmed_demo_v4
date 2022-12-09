@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sunat_chart_all,Todos los permisos,model_sunat_chart,account.group_account_manager,1,1,1,1
+access_sunat_chart_1_all,Todos los permisos,model_sunat_chart_1,account.group_account_manager,1,1,1,1
+access_sunat_chart_11_all,Todos los permisos,model_sunat_chart_11,account.group_account_manager,1,1,1,1

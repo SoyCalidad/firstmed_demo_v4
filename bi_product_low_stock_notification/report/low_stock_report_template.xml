@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="low_stock_template">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <center><table><th><h4><b>Reporte de Stock Bajo para Productos</b></h4></th></table></center>
+                <br/><br/>
+                <table width="100%" cellspacing="5">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">Producto</th>
+                            <th style="border: 1px solid black;">Categoría</th>
+                            <th style="border: 1px solid black;">Und. Med.</th>
+                            <th style="border: 1px solid black;">Stock Minimo</th>
+                            <th style="border: 1px solid black;">Stock Actual</th>
+                            <th style="border: 1px solid black;">Cantidad Requerida</th>
+                            <th style="border: 1px solid black;">Cantidad Pedida</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="rec_ids" t-as="o">
+                        <tr style="border: 1px solid black;">
+                    	    <td style="border: 1px solid black;"><span t-field="o.name"/></td>
+                    	    <td style="border: 1px solid black;"><span t-field="o.category_id"/></td>
+                    	    <td style="border: 1px solid black;"><span t-field="o.uom_id"/></td>
+                            <td style="border: 1px solid black;text-align:right;"><span t-field="o.limit_quantity" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td style="border: 1px solid black;text-align:right;"><span t-field="o.stock_quantity" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td style="border: 1px solid black;text-align:right;"><span t-esc="o.limit_quantity - o.stock_quantity" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td style="border: 1px solid black;text-align:right;"><span t-field="o.cant_compra" t-options='{"widget": "float", "precision": 2}'/></td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+
+<record id="action_low_stock_report" model="ir.actions.report">
+    <field name="name">Reporte de Stock Mínimo</field>
+    <field name="model">res.config.settings</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_file">bi_product_low_stock_notification.low_stock_template</field>
+    <field name="report_name">bi_product_low_stock_notification.low_stock_template</field>
+</record>
+
+</data>
+</odoo>
