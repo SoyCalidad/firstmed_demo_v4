@@ -18,8 +18,9 @@ class StockQuant(models.Model):
         ) or not config["test_enable"]
         if not check_negative_qty:
             return
-
+        
         for quant in self:
+            print (quant.quantity)
             disallowed_by_product = (
                 not quant.product_id.allow_negative_stock
                 and not quant.product_id.categ_id.allow_negative_stock

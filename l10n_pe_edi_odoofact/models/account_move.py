@@ -100,7 +100,8 @@ class AccountMove(models.Model):
 	# Medical information
 	physician_id = fields.Many2one('res.partner', string='Médico', select=True)
 	comment = fields.Text(string='Comments')
-
+	
+	
 	@api.onchange('partner_id')
 	def _onchange_partner_id(self):
 		if self.company_id.country_id.code == 'PE' and self.partner_id.country_id and self.partner_id.country_id.code != 'PE':
@@ -758,6 +759,11 @@ class AccountMove(models.Model):
 		if self.company_id.country_id.code == 'PE':
 			return 'l10n_pe_edi_odoofact.report_invoice_document'
 		return super()._get_name_invoice_report()
+
+	@api.depends('move_type', 'company_id')
+	def _compute_l10n_pe_edi_operation_type(self):
+		for move in self:
+			pass
 		
 class AccountMoveLine(models.Model):
 	_inherit = "account.move.line"
